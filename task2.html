@@ -1,0 +1,77 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Stopwatch</title>
+  <style>
+    body {
+      font-family: 'Arial', sans-serif;
+      text-align: center;
+      margin: 50px;
+      
+    }
+
+    #stopwatch {
+      font-size: 15em;
+      margin-bottom: 20px;
+      color: #6acaad;
+    }
+
+    #controls {
+      margin-bottom: 20px;
+      font-size: larger;
+    }
+  </style>
+</head>
+<body>
+<h1>Stopwatch</h1>
+  <div id="stopwatch">0:00</div>
+
+  <div id="controls">
+    <button onclick="startStopwatch()">Start</button>
+    <button onclick="pauseStopwatch()">Pause</button>
+    <button onclick="resetStopwatch()">Reset</button>
+  </div>
+
+  <script>
+    let timer;
+    let startTime;
+    let isRunning = false;
+    
+    function startStopwatch() {
+      if (!isRunning) {
+        isRunning = true;
+        startTime = new Date().getTime();
+        timer = setInterval(updateStopwatch, 100);
+      }
+    }
+
+    function pauseStopwatch() {
+      isRunning = false;
+      clearInterval(timer);
+    }
+
+    function resetStopwatch() {
+      isRunning = false;
+      clearInterval(timer);
+      document.getElementById("stopwatch").innerText = "0:00";
+    }
+
+    function updateStopwatch() {
+      const currentTime = new Date().getTime();
+      const elapsedTime = currentTime - startTime;
+      const formattedTime = formatTime(elapsedTime);
+      document.getElementById("stopwatch").innerText = formattedTime;
+    }
+
+    function formatTime(milliseconds) {
+      const totalSeconds = Math.floor(milliseconds / 1000);
+      const minutes = Math.floor(totalSeconds / 60);
+      const seconds = totalSeconds % 60;
+      return minutes + ":" + (seconds < 10 ? "0" : "") + seconds;
+    }
+  </script>
+
+</body>
+</html>
